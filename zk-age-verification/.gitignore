@@ -1,0 +1,7 @@
+node_modules/
+artifacts/
+shared/generated/*
+!shared/generated/.gitkeep
+circom/build/
+.env
+*.log

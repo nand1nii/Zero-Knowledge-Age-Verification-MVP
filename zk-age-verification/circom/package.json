@@ -1,0 +1,21 @@
+{
+  "name": "zk-age-circom",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Module 3: the age_check circuit, its build pipeline (local trusted setup) and circuit tests",
+  "scripts": {
+    "build": "bash scripts/build.sh",
+    "pretest": "bash scripts/build.sh",
+    "test": "node --test \"test/**/*.test.js\""
+  },
+  "dependencies": {
+    "circomlib": "2.0.5",
+    "snarkjs": "0.7.6"
+  },
+  "devDependencies": {
+    "circomlibjs": "0.1.7"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

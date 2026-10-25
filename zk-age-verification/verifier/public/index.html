@@ -1,0 +1,39 @@
+<!doctype html>
+<!-- verifier/public/index.html
+     Landing page of the age-locked demo site. The "Verify Age with ZK" button opens the
+     wallet popup; landing.js handles the challenge, the popup and the proof. -->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The 18+ Lounge</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <main>
+    <p class="eyebrow">Demo website &middot; adults only</p>
+    <h1>The 18+ Lounge</h1>
+    <p>
+      This page is for adults only. Prove you are at least 18 with your Demoland ID card.
+      Your wallet makes a zero-knowledge proof on your own device, so this site never
+      sees your birthdate, name or ID number.
+    </p>
+
+    <button id="verify" type="button">Verify Age with ZK</button>
+    <p id="status" role="status" aria-live="polite"></p>
+
+    <details>
+      <summary>How does this work?</summary>
+      <ol>
+        <li>This site asks its server for a fresh, single-use challenge (valid for 2 minutes).</li>
+        <li>Your wallet opens in a popup with that challenge. You drop in your ID card and approve.</li>
+        <li>The wallet proves "a trusted issuer signed my birthdate and it makes me 18+" and sends back only the proof.</li>
+        <li>The server checks every public value and the proof. Then it lets you in.</li>
+      </ol>
+    </details>
+  </main>
+  <script src="/shared/constants.js"></script>
+  <script src="/landing.js"></script>
+</body>
+</html>

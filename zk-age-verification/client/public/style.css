@@ -1,0 +1,82 @@
+/* client/public/style.css
+   Styles for the wallet popup. Plain CSS, no framework. */
+
+:root {
+  --bg: #0f1720;
+  --panel: #18222e;
+  --text: #e8eef5;
+  --muted: #93a4b8;
+  --accent: #36c2a5;
+  --error: #ff8080;
+  --border: #2a394a;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+main { max-width: 480px; margin: 0 auto; padding: 24px 16px 40px; }
+header { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+header h1 { margin: 0; font-size: 22px; }
+header p { margin: 0; }
+.logo { font-size: 32px; }
+.muted { color: var(--muted); }
+.note { color: var(--muted); font-size: 13px; margin-top: 4px; }
+.error { color: var(--error); font-weight: 600; min-height: 1.5em; }
+h2 { margin-top: 0; }
+
+section { background: var(--panel); border: 1px solid var(--border); border-radius: 14px; padding: 20px; }
+.request { margin-top: 0; }
+
+.dropzone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 36px 16px;
+  border: 2px dashed var(--border);
+  border-radius: 12px;
+  text-align: center;
+  cursor: pointer;
+}
+.dropzone.over, .dropzone:hover { border-color: var(--accent); }
+.dropzone .big { font-size: 18px; font-weight: 600; }
+.dropzone input { position: absolute; width: 1px; height: 1px; opacity: 0; }
+
+.remembered { margin-bottom: 16px; padding: 12px; border-radius: 10px; background: #1f2d3b; }
+.remembered p { margin-top: 0; }
+
+.checkbox { display: flex; align-items: center; gap: 8px; margin-top: 12px; }
+
+.card-preview { width: 100%; border-radius: 10px; margin-bottom: 16px; }
+.consent p:first-child { font-size: 18px; margin-top: 0; }
+.buttons { display: flex; gap: 12px; margin-top: 16px; }
+
+button {
+  padding: 11px 20px;
+  border: 0;
+  border-radius: 10px;
+  background: var(--accent);
+  color: #062019;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+button.secondary { background: transparent; color: var(--text); border: 1px solid var(--border); }
+
+#progress-step { text-align: center; }
+.spinner {
+  width: 48px;
+  height: 48px;
+  margin: 8px auto 16px;
+  border: 5px solid var(--border);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.9s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }

@@ -1,0 +1,90 @@
+<!doctype html>
+<!-- client/public/index.html
+     The ZK wallet popup. A website opens it with public request parameters in the URL; the
+     user drops in their ID card PNG, approves, and the proof is made right here in the browser. -->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ZK Wallet</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <main>
+    <header>
+      <span class="logo" aria-hidden="true">&#128273;</span>
+      <div>
+        <h1>ZK Wallet</h1>
+        <p class="muted">Your ID never leaves this device.</p>
+      </div>
+    </header>
+
+    <!-- Shown while the request is being checked. -->
+    <section id="loading-step">
+      <p class="muted">Checking the request...</p>
+    </section>
+
+    <!-- Fatal problems: bad origin, bad request, no opener. Nothing else is shown. -->
+    <section id="fatal-step" hidden>
+      <h2>Request refused</h2>
+      <p id="fatal-message" class="error"></p>
+      <button type="button" class="secondary" data-action="close">Close</button>
+    </section>
+
+    <!-- Step 1: choose the ID card. -->
+    <section id="card-step" hidden>
+      <p class="request"><strong class="site"></strong> asks you to prove you are at least <strong class="age"></strong>.</p>
+
+      <div id="remembered" class="remembered" hidden>
+        <p>Remembered card: <strong id="remembered-name"></strong></p>
+        <button type="button" id="use-remembered">Use this card</button>
+        <button type="button" id="forget" class="secondary">Forget</button>
+      </div>
+
+      <label id="dropzone" class="dropzone" for="file-input">
+        <span class="big">Drop your <code>id_card.png</code> here</span>
+        <span class="muted">or click to choose the file</span>
+        <input id="file-input" type="file" accept="image/png">
+      </label>
+      <p id="card-error" class="error" role="alert"></p>
+    </section>
+
+    <!-- Step 2: consent. -->
+    <section id="consent-step" hidden>
+      <img id="card-preview" class="card-preview" alt="Your ID card" hidden>
+      <div class="consent">
+        <p><strong class="site"></strong> wants proof that you are at least <strong class="age"></strong>.</p>
+        <p>Your birthdate will <strong>NOT</strong> be shared. Neither will your name, address or ID number.</p>
+      </div>
+      <label class="checkbox">
+        <input type="checkbox" id="remember"> Remember my card
+      </label>
+      <p class="note">Demo only, stored unencrypted in this browser.</p>
+      <div class="buttons">
+        <button type="button" id="approve">Approve</button>
+        <button type="button" class="secondary" data-action="close">Cancel</button>
+      </div>
+    </section>
+
+    <!-- Step 3: proving. -->
+    <section id="progress-step" hidden>
+      <div class="spinner" aria-hidden="true"></div>
+      <p id="progress-message" role="status">Generating your proof...</p>
+      <p class="muted"><span id="elapsed">0.0</span> s</p>
+    </section>
+
+    <!-- Step 4: done. -->
+    <section id="done-step" hidden>
+      <h2>Proof sent &#10003;</h2>
+      <p>Only <strong class="site"></strong> received it. This window will close by itself.</p>
+    </section>
+  </main>
+
+  <script src="/shared/constants.js"></script>
+  <script src="/snarkjs.min.js"></script>
+  <script src="/png-parse.js"></script>
+  <script src="/wallet-core.js"></script>
+  <script src="/wallet.js"></script>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!doctype html>
+<!-- verifier/protected/success.html
+     The age-locked content. Kept outside public/ so it is only ever sent by the /success
+     route, after the server has checked session.verified. -->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Welcome to the 18+ Lounge</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <main>
+    <p class="eyebrow">Age verified with a zero-knowledge proof</p>
+    <h1 id="secret">Welcome to the 18+ Lounge</h1>
+    <p>
+      You proved you are at least 18. This site learned only that a trusted issuer vouches
+      for your age. It never saw your birthdate, name, ID number or signature.
+    </p>
+    <div class="secret-box">
+      <h2>Members-only content</h2>
+      <p>The secret password of the lounge is <strong>"zero knowledge, full trust"</strong>.</p>
+    </div>
+    <button id="logout" type="button" class="secondary">Start over</button>
+  </main>
+  <script src="/success.js"></script>
+</body>
+</html>

@@ -1,0 +1,19 @@
+{
+  "name": "zk-age-verifier",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Module 4: age-locked website that verifies zero-knowledge age proofs",
+  "scripts": {
+    "start": "node src/server.js",
+    "test": "node --test \"test/**/*.test.js\""
+  },
+  "dependencies": {
+    "express": "5.3.0",
+    "express-rate-limit": "8.7.1",
+    "express-session": "1.19.0",
+    "snarkjs": "0.7.6"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

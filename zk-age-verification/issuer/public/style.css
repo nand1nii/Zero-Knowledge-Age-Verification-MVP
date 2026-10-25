@@ -1,0 +1,66 @@
+/* issuer/public/style.css
+   Styles for the issuer form page. Plain CSS, no framework. */
+
+:root {
+  --bg: #f3f6fa;
+  --panel: #ffffff;
+  --text: #13263a;
+  --muted: #5b6f84;
+  --accent: #0b5fa5;
+  --error: #b42318;
+  --border: #d3dde8;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+main { max-width: 640px; margin: 0 auto; padding: 32px 16px 64px; }
+h1 { margin: 4px 0 8px; font-size: 28px; }
+.eyebrow { margin: 0; color: var(--accent); font-weight: 600; letter-spacing: .04em; text-transform: uppercase; font-size: 13px; }
+.muted { color: var(--muted); font-size: 14px; }
+
+form, #result {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+  margin-top: 24px;
+}
+
+label { display: block; margin-bottom: 16px; font-weight: 600; }
+input, textarea {
+  display: block;
+  width: 100%;
+  margin-top: 6px;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font: inherit;
+  font-weight: normal;
+}
+input[type="file"] { padding: 8px; }
+
+button, .button {
+  display: inline-block;
+  padding: 12px 20px;
+  border: 0;
+  border-radius: 8px;
+  background: var(--accent);
+  color: #fff;
+  font: inherit;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+}
+button:disabled { opacity: .6; cursor: progress; }
+
+#status { min-height: 1.5em; margin: 12px 0 0; }
+#status.error { color: var(--error); font-weight: 600; }
+
+#card { width: 100%; height: auto; border-radius: 12px; box-shadow: 0 4px 16px rgba(0, 0, 0, .15); }

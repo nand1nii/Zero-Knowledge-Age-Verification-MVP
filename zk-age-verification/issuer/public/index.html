@@ -1,0 +1,52 @@
+<!doctype html>
+<!-- issuer/public/index.html
+     The mock government's ID form. Submitting it returns an ID card PNG with a signed
+     credential hidden inside. Logic lives in issuer.js (no inline scripts: strict CSP). -->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Demoland ID Office</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main>
+    <header>
+      <p class="eyebrow">Republic of Demoland &middot; mock issuer</p>
+      <h1>Get your Smart ID Card</h1>
+      <p class="muted">Demo only. Do not enter real personal data.</p>
+    </header>
+
+    <form id="id-form" novalidate>
+      <label>Full name
+        <input name="name" required maxlength="60" autocomplete="off">
+      </label>
+      <label>Date of birth
+        <input name="dob" type="date" required>
+      </label>
+      <label>Address
+        <textarea name="address" required maxlength="120" rows="2"></textarea>
+      </label>
+      <label>Contact info <span class="muted">(optional)</span>
+        <input name="contact" maxlength="100" autocomplete="off">
+      </label>
+      <label>Photo <span class="muted">(optional, PNG or JPEG, max 2 MB)</span>
+        <input name="photo" type="file" accept="image/png,image/jpeg">
+      </label>
+      <button type="submit" id="submit">Issue my ID card</button>
+      <p id="status" role="status"></p>
+    </form>
+
+    <section id="result" hidden>
+      <h2>Your ID card</h2>
+      <img id="card" alt="Your new ID card">
+      <p><a id="download" class="button" download="id_card.png">Download id_card.png</a></p>
+      <p class="muted">
+        Keep the <strong>original downloaded file</strong>. The signed credential is hidden in
+        the PNG's metadata, so screenshots, messaging apps and image editors will strip it.
+      </p>
+    </section>
+  </main>
+  <script src="issuer.js"></script>
+</body>
+</html>

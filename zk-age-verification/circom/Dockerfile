@@ -4,10 +4,9 @@
 # Build context is the repo root (see docker-compose.yml) so shared/ can be copied in.
 
 # ---- Stage 1: build the Circom compiler from source (works on amd64 and arm64) ----
-FROM rust:1.79-slim-bookworm AS circom
-RUN apt-get update \
- && apt-get install -y --no-install-recommends git ca-certificates \
- && rm -rf /var/lib/apt/lists/*
+# The full (non-slim) Rust image already has git, so no apt step is needed.
+# Only the compiled binary is kept; this stage is thrown away.
+FROM rust:1.79-bookworm AS circom
 ARG CIRCOM_VERSION=v2.1.9
 RUN git clone --depth 1 --branch "${CIRCOM_VERSION}" https://github.com/iden3/circom.git /circom \
  && cd /circom \

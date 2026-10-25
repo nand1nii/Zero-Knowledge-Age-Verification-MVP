@@ -1,0 +1,12 @@
+# .dockerignore
+# The build context is the repo root (so shared/ can be copied into each image).
+# Keep local installs, build outputs and secrets out of it.
+**/node_modules
+**/npm-debug.log
+artifacts
+circom/build
+shared/generated/*
+!shared/generated/.gitkeep
+tests
+.env
+.git

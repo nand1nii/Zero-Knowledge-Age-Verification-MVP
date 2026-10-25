@@ -1,16 +1,17 @@
 # Zero-Knowledge Age Verification MVP
 
-A command-line demo of zero-knowledge age verification. It proves "I am at least 18"
-without revealing the birthdate. It uses Circom 2, Groth16 via snarkjs, EdDSA-Poseidon
-signatures from circomlib, and TypeScript.
+Prove "I am at least 18" without revealing your birthdate, using Circom 2, Groth16 (snarkjs)
+and EdDSA-Poseidon signatures. This repository holds two independent demos:
 
-The code, setup instructions and security caveats are in
-[`zk-age-proof/`](zk-age-proof/README.md).
+| Folder | What it is |
+|---|---|
+| [`zk-age-verification/`](zk-age-verification/README.md) | **The web demo.** A mock government issues an ID card PNG with a hidden signed credential. A website asks "are you 18+?", and a wallet popup proves it in the browser. Four isolated modules (issuer, wallet, circuit, verifier) run with one `docker compose up --build`. |
+| [`zk-age-proof/`](zk-age-proof/README.md) | The earlier command-line demo (TypeScript): issuer → prover → verifier scripts with nullifiers. |
 
 ```bash
-cd zk-age-proof
-npm install && npm run setup && npm run demo && npm test
+cd zk-age-verification
+docker compose up --build      # then open http://localhost:3001
 ```
 
-> Proof of concept only. It is unaudited, and its trusted setup is for development use.
-> Do not use it with real identity documents.
+> These are proofs of concept for teaching. They are unaudited, their trusted setups are for
+> development use, and they must not be used with real identity documents.

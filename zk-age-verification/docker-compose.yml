@@ -1,0 +1,82 @@
+# docker-compose.yml
+# Starts the whole demo: two one-shot jobs (circuit build, issuer keygen), then the issuer,
+# wallet and verifier servers. Run `docker compose up --build`, then open http://localhost:3001.
+#
+# Every service builds from the repo root (context: .) so its Dockerfile can copy shared/.
+# Settings can be overridden in a .env file next to this one (see .env.example).
+
+name: zk-age-verification
+
+x-issuer-image: &issuer-image
+  image: zk-age-verification/issuer
+  build:
+    context: .
+    dockerfile: issuer/Dockerfile
+
+services:
+  # One-shot: compile the circuit + local (NOT secure) trusted setup -> `artifacts` volume.
+  # Skips the work if the volume already holds artifacts for this exact circuit.
+  circom-builder:
+    build:
+      context: .
+      dockerfile: circom/Dockerfile
+    volumes:
+      - artifacts:/artifacts
+    restart: "no"
+
+  # One-shot: write the issuer public key to the `issuer-pubkey` volume (reuses the issuer image).
+  keygen:
+    <<: *issuer-image
+    command: ["node", "src/keygen.js"]
+    environment:
+      # Same DEMO ONLY default as .env.example. Never reuse it: it is public.
+      ISSUER_PRIVATE_KEY: ${ISSUER_PRIVATE_KEY:-34e7d650cb34d80c2ff40f5d5cfee821eeac0597412afc232791f4b54ebae82a}
+    volumes:
+      - issuer-pubkey:/app/shared/generated
+    restart: "no"
+
+  issuer:
+    <<: *issuer-image
+    init: true # reaps Chromium child processes
+    environment:
+      ISSUER_PRIVATE_KEY: ${ISSUER_PRIVATE_KEY:-34e7d650cb34d80c2ff40f5d5cfee821eeac0597412afc232791f4b54ebae82a}
+    ports:
+      - "127.0.0.1:3001:3001"
+    depends_on:
+      keygen:
+        condition: service_completed_successfully
+
+  client:
+    build:
+      context: .
+      dockerfile: client/Dockerfile
+    environment:
+      ALLOWED_VERIFIER_ORIGINS: ${ALLOWED_VERIFIER_ORIGINS:-http://localhost:3003}
+    volumes:
+      - artifacts:/artifacts:ro
+    ports:
+      - "127.0.0.1:3002:3002"
+    depends_on:
+      circom-builder:
+        condition: service_completed_successfully
+
+  verifier:
+    build:
+      context: .
+      dockerfile: verifier/Dockerfile
+    environment:
+      SESSION_SECRET: ${SESSION_SECRET:-}
+    volumes:
+      - artifacts:/artifacts:ro
+      - issuer-pubkey:/app/shared/generated:ro
+    ports:
+      - "127.0.0.1:3003:3003"
+    depends_on:
+      circom-builder:
+        condition: service_completed_successfully
+      keygen:
+        condition: service_completed_successfully
+
+volumes:
+  artifacts: # age_check.wasm, age_check_final.zkey, verification_key.json (+ build cache)
+  issuer-pubkey: # issuer-pubkey.json
